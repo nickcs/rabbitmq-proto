@@ -11,6 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu64"
+  config.vm.hostname = "rabbitmg-proto"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -58,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Enable provisioning with a shell script
   config.vm.provision "shell", path: "setup.sh", privileged: false
-  config.vm.provision "shell", path: "startup.sh", run: "always", privileged: false
+  config.vm.provision "shell", inline: "npm start", run: "always", privileged: false
 
   # Enable provisioning with CFEngine. CFEngine Community packages are
   # automatically installed. For example, configure the host as a
