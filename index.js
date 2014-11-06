@@ -17,33 +17,32 @@ app.set('port', process.env.PORT || 3000)
 app.use(bodyParser.json())
 
 app.post('/start-server', function(req, res){
-  app.rabbitMqConnection = amqp.createConnection({ host: 'localhost' })
-  app.rabbitMqConnection.on('ready', function(){
-    status.connection = 'Connected!'
+  app.amqpConnection = amqp.createConnection({ host: 'localhost' })
+  // Wait for connection to become established.
+  app.amqpConnection.on('ready', function () {
+    status.connection = 'Connection is ready';
 
-    app.e = app.rabbitMqConnection.exchange('test-exchange')
-    status.exchange = 'The exchange is ready to use!'
+    var options = {
+      type: 'fanout',
+      autoDelete: false
+    }
 
-    app.q = app.rabbitMqConnection.queue('test-queue')
-    status.queue = 'The queue is ready for use!'
-
-    app.q.bind(app.e, '#')
-
-    app.q.subscribe(function(msg){
-      console.dir(msg);
-      // res.send(JSON.stringify(msg));
+    app.amqpConnection.exchange('logs', options, function(exchange){
+      app.amqpExchange = exchange;
+      status.exchange = 'Exchange is ready';
+      res.send(status);
     });
-
-    res.send(status)
-  })
+  });
 });
 
-app.post('/new-message', function(req, res){
+app.post('/emit-log', function(req, res){
   var newMessage = req.body;
-  app.e.publish('routingKey', newMessage);
-  res.send();
+  console.dir(newMessage);
+  console.log('log message level: ' + newMessage.level + ' body: ' + newMessage.message);
+  app.amqpExchange.publish('', newMessage.message);
+  res.send('message sent');
 });
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('RabbitMQ + Node.js app is running on port ' + app.get('port'));
+  console.log('RabbitMQ + Node.js app is running on port ' + app.get('port') + '. To exit press CTRL+C');
 });
