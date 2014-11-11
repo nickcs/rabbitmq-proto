@@ -1,0 +1,17 @@
+{
+  "name": "log-writer",
+  "version": "0.0.1",
+  "description": "logging microservice that writes to disk",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nick Nance",
+  "license": "ISC",
+  "dependencies": {
+    "amqp": "^0.2.0",
+    "winston": "^0.8.3"
+  }
+}
