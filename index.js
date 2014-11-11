@@ -1,13 +1,17 @@
 var express = require('express'),
     http = require('http'),
-    path = require('path'),
+    url = require('url'),
     amqp = require('amqp'),
     bodyParser = require('body-parser')
 
 var status = {
   connection: 'No server connection',
-  exchange: 'No exchange established',
-  queue: 'No queue established'
+  lastExchange: 'No exchange established'
+}
+
+var exchangeOptions = {
+  type: 'fanout',
+  autoDelete: false
 }
 
 var app = express()
@@ -20,29 +24,24 @@ app.get('/status', function(req, res){
     res.send(status)
 })
 
-app.post('/emit-log', function(req, res){
+app.post('/*', function(req, res){
+  var path = url.parse(req.url).pathname.substring(1);
   var newMessage = req.body;
-  console.dir(newMessage);
-  console.log('log message level: ' + newMessage.level + ' body: ' + newMessage.message);
-  app.amqpExchange.publish('', newMessage.message);
-  res.send('message sent');
+
+  console.log('message received for exchange: ' + path);
+
+  app.amqpConnection.exchange(path, exchangeOptions, function(exchange){
+    status.lastExchange = 'Last exchange used: ' + path;
+    status.lastMessage = newMessage;
+    exchange.publish('', newMessage.message);
+    res.send();
+  })
 })
 
 app.amqpConnection = amqp.createConnection({ host: 'localhost' })
 // Wait for connection to become established.
 app.amqpConnection.on('ready', function () {
   status.connection = 'Connection is ready';
-
-  var options = {
-    type: 'fanout',
-    autoDelete: false
-  }
-
-  // wait for exchange to be created
-  app.amqpConnection.exchange('logs', options, function(exchange){
-    app.amqpExchange = exchange;
-    status.exchange = 'Exchange is ready';
-  })
 })
 
 http.createServer(app).listen(app.get('port'), function(){
