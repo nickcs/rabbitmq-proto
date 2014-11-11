@@ -22,6 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network "forwarded_port", guest: 3000, host: 3000
+  config.vm.network "forwarded_port", guest: 5672, host: 5672
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -59,7 +60,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Enable provisioning with a shell script
   config.vm.provision "shell", path: "setup.sh", privileged: false
-  config.vm.provision "shell", inline: "npm start", run: "always", privileged: false
+  config.vm.provision "shell", inline: "cd /vagrant && node index.js", run: "always", privileged: false
 
   # Enable provisioning with CFEngine. CFEngine Community packages are
   # automatically installed. For example, configure the host as a
