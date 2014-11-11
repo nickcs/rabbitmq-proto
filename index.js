@@ -33,7 +33,7 @@ app.post('/*', function(req, res){
   app.amqpConnection.exchange(path, exchangeOptions, function(exchange){
     status.lastExchange = 'Last exchange used: ' + path;
     status.lastMessage = newMessage;
-    exchange.publish('', newMessage.message);
+    exchange.publish('', newMessage);
     res.send();
   })
 })
