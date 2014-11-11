@@ -4,6 +4,7 @@
   "description": "Sample Microservice using AMQP bus",
   "main": "receive-logs.js",
   "scripts": {
+    "start": "node receive-logs.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nick Nance",
