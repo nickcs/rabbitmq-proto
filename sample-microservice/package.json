@@ -1,0 +1,14 @@
+{
+  "name": "sample-microservice",
+  "version": "0.0.1",
+  "description": "Sample Microservice using AMQP bus",
+  "main": "receive-logs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nick Nance",
+  "license": "ISC",
+  "dependencies": {
+    "amqp": "^0.2.0"
+  }
+}
