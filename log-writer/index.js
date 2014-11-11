@@ -1,6 +1,9 @@
 var amqp = require('amqp');
+var winston = require('winston');
 
 var connection = amqp.createConnection({host: 'localhost'});
+
+winston.add(winston.transports.File, {filename: 'logfile.log'});
 
 connection.on('ready', function(){
     var options = {
@@ -14,7 +17,7 @@ connection.on('ready', function(){
             console.log(' [*] Waiting for logs. To exit press CTRL+C')
 
             queue.subscribe(function(msg){
-                console.log(" [x] %s", msg.message);
+              winston.log(msg.level, msg.message);
             });
         })
     });
