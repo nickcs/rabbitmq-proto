@@ -1,0 +1,22 @@
+{
+  "name": "http-publisher",
+  "version": "0.0.1",
+  "description": "microservice that excepts a message on an end point and publishes it to an exchange",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "amqp",
+    "node"
+  ],
+  "author": "Nick Nance",
+  "license": "ISC",
+  "dependencies": {
+    "amqp": "^0.2.0",
+    "body-parser": "^1.9.2",
+    "express": "^4.10.1"
+  }
+}

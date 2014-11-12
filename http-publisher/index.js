@@ -45,5 +45,5 @@ app.amqpConnection.on('ready', function () {
 })
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('RabbitMQ + Node.js app is running on port ' + app.get('port') + '. To exit press CTRL+C');
+  console.log('http-publisher is running on port ' + app.get('port') + '. To exit press CTRL+C');
 })

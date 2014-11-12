@@ -60,7 +60,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Enable provisioning with a shell script
   config.vm.provision "shell", path: "setup.sh", privileged: false
-  config.vm.provision "shell", inline: "cd /vagrant && node index.js", run: "always", privileged: false
+  config.vm.provision "shell", path: "startup.sh", run: "always", privileged: false
 
   # Enable provisioning with CFEngine. CFEngine Community packages are
   # automatically installed. For example, configure the host as a
