@@ -1,0 +1,22 @@
+{
+  "name": "gateway-sender",
+  "version": "0.0.1",
+  "description": "microservice that passes messages to an http end point",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "amqp",
+    "nodejs"
+  ],
+  "author": "Nick Nance",
+  "license": "ISC",
+  "dependencies": {
+    "amqp": "^0.2.0",
+    "config": "^1.7.0",
+    "request": "^2.47.0"
+  }
+}
