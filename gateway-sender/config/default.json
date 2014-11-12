@@ -1,4 +1,4 @@
 {
-  "exchangeName": "logs",
-  "endpoint": "http://localhost:3000/downstream"
+  "inboundExchange": "downstream",
+  "endpoint": "http://10.11.11.11:3100/downstream"
 }
