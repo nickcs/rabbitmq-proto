@@ -1,0 +1,4 @@
+{
+  "inboundExchange": "downstream",
+  "outboundExchange": "upstream"
+}
