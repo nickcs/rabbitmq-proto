@@ -10,7 +10,7 @@
   },
   "keywords": [
     "amqp",
-    "node"
+    "microservice"
   ],
   "author": "Nick Nance",
   "license": "ISC",
