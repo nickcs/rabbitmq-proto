@@ -14,7 +14,7 @@ connection.on('ready', function(){
             console.log(' [*] Waiting for logs. To exit press CTRL+C')
 
             queue.subscribe(function(msg){
-                console.log(" [x] %s", msg.message);
+                console.log(" [x] %s with level %s", msg.message, msg.level);
             });
         })
     });
