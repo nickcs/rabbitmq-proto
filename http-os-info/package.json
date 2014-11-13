@@ -19,6 +19,7 @@
     "body-parser": "^1.9.2",
     "express": "^4.10.1",
     "underscore": "^1.7.0",
-    "uuid": "^2.0.1"
+    "uuid": "^2.0.1",
+    "config": "~1.7.0"
   }
 }
