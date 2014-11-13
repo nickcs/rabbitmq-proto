@@ -1,24 +1,28 @@
-var amqp = require('amqp');
-var winston = require('winston');
+var config = require('config'),
+    amqp = require('amqp'),
+    winston = require('winston')
 
-var connection = amqp.createConnection({host: 'localhost'});
+var exchangeOptions = config.get('exchangeOptions'),
+    subscriptionName = process.env.SUBNAME || config.get('subscriptionName'),
+    host = process.env.HOST || config.get('host')
 
-winston.add(winston.transports.File, {filename: 'logfile.log'});
+var connection = amqp.createConnection({host: host});
+
+winston.add(winston.transports.File, {filename: subscriptionName + '.log'});
 
 connection.on('ready', function(){
-    var options = {
-      type: 'fanout',
-      autoDelete: false
-    }
+  connection.exchange(subscriptionName, exchangeOptions, function(exchange){
+    connection.queue('log-writer', {exclusive: true}, function(queue){
+      queue.bind(subscriptionName, '');
+      console.log(' [*] Waiting for logs. To exit press CTRL+C')
 
-    connection.exchange('logs', options, function(exchange){
-        connection.queue('log-writer', {exclusive: true}, function(queue){
-            queue.bind('logs', '');
-            console.log(' [*] Waiting for logs. To exit press CTRL+C')
-
-            queue.subscribe(function(msg){
-              winston.log(msg.level, msg.message);
-            });
-        })
-    });
+      queue.subscribe(function(msg){
+        if (msg.level) {
+          winston.log(msg.level, msg.message);
+        } else {
+          winston.log('info', msg);
+        }
+      });
+    })
+  });
 });

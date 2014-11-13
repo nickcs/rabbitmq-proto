@@ -1,0 +1,8 @@
+{
+  "host": "localhost",
+  "subscriptionName": "logs",
+  "exchangeOptions": {
+    "type": "fanout",
+    "autoDelete": false
+  }
+}
