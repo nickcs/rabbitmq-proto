@@ -21,7 +21,7 @@ connection.on('ready', function(){
 
         queue.subscribe(function(msg){
           console.log(' [x] Message received');
-          var info = {
+          msg.info = {
             hostname: os.hostname(),
             name: os.type(),
             platform: os.platform(),
@@ -34,9 +34,8 @@ connection.on('ready', function(){
             netinterfaces: os.networkInterfaces()
           }
           connection.exchange(outboundExchange, options, function(exchange){
-            exchange.publish('', info);
+            exchange.publish('', msg);
             console.log(' [x] Message sent');
-            console.dir(info);
           })
         })
       })
