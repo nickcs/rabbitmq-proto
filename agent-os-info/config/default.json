@@ -1,4 +1,8 @@
 {
-  "inboundExchange": "downstream",
-  "outboundExchange": "upstream"
+  "subscriptionName": "downstream",
+  "publishingName": "upstream",
+  "exchangeOptions": {
+    "type": "fanout",
+    "autoDelete": false
+  }
 }
