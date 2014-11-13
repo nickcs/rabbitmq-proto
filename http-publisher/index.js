@@ -1,22 +1,21 @@
-var express = require('express'),
+var config = require('config'),
+    express = require('express'),
     http = require('http'),
     url = require('url'),
     amqp = require('amqp'),
     bodyParser = require('body-parser')
+
+var exchangeOptions = config.get('exchangeOptions'),
+    port = process.env.PORT || config.get('port')
 
 var status = {
   connection: 'No server connection',
   lastExchange: 'No exchange established'
 }
 
-var exchangeOptions = {
-  type: 'fanout',
-  autoDelete: false
-}
-
 var app = express()
 
-app.set('port', process.env.PORT || 3000)
+app.set('port', port)
 
 app.use(bodyParser.json())
 
