@@ -20,6 +20,7 @@
     "express": "^4.10.1",
     "underscore": "^1.7.0",
     "uuid": "^2.0.1",
-    "config": "~1.7.0"
+    "config": "~1.7.0",
+    "lru-cache": "~2.5.0"
   }
 }

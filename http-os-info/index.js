@@ -1,17 +1,22 @@
 var config = require('config'),
+    _ = require('underscore'),
     express = require('express'),
     http = require('http'),
     amqp = require('amqp'),
     bodyParser = require('body-parser'),
     uuid = require('uuid'),
-    _ = require('underscore')
+    LRU = require('lru-cache')
 
 var exchangeOptions = config.get('exchangeOptions'),
     subscriptionName = process.env.SUBNAME || config.get('subscriptionName'),
     publishingName = process.env.PUBNAME || config.get('publishingName'),
+    cacheSize = config.get('cacheSize'),
     port = process.env.PORT || config.port
 
-var requests = []
+var requests = LRU({
+  max: cacheSize,
+  maxAge: 60e3
+})
 
 var app = express()
 
@@ -20,7 +25,7 @@ function publishMessage(res, exchange) {
     id: uuid.v4(),
     response: res
   }
-  requests.push(request);
+  requests.set(request.id, request);
   exchange.publish('', {id: request.id});
   console.log(' [x] ' + publishingName + ' message sent');
 }
@@ -33,7 +38,7 @@ function listenToUpstream() {
 
           queue.subscribe(function(msg){
             console.log(' [x] ' + subscriptionName + ' message received')
-            _.findWhere(requests,{id: msg.id}).response.send(msg);
+            requests.get(msg.id).response.send(msg)
           });
       })
   });
