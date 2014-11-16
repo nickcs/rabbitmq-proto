@@ -28,6 +28,10 @@ function publishMessage(res, exchange) {
   requests.set(request.id, request);
   exchange.publish('', {id: request.id});
   console.log(' [x] ' + publishingName + ' message sent');
+
+  setTimeout(function(){
+    if (!res.headersSent) res.sendStatus(408)
+  }, 30e3)
 }
 
 function listenToUpstream() {
