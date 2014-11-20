@@ -39,6 +39,6 @@ curl http://localhost:3000/status
 
 To put a log message in the queue run
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"level":"error","message":"hello world"}' http://localhost:3000/emit-log
+curl -X POST -H "Content-Type: application/json" -d '{"level":"error","message":"hello world"}' http://localhost:3000/logs
 ```
 Once you have sent the log message you should see it on the console of the microservices.

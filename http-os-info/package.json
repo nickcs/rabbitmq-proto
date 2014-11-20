@@ -1,7 +1,7 @@
 {
-  "name": "log-displayer",
+  "name": "http-os-info",
   "version": "0.0.1",
-  "description": "logging microservice that writes to the console",
+  "description": "microservice that retrieves o/s info for agent and returns results",
   "main": "index.js",
   "scripts": {
     "prestart": "npm install",
@@ -15,6 +15,12 @@
   "author": "Nick Nance",
   "license": "ISC",
   "dependencies": {
-    "amqp": "^0.2.0"
+    "amqp": "^0.2.0",
+    "body-parser": "^1.9.2",
+    "express": "^4.10.1",
+    "underscore": "^1.7.0",
+    "uuid": "^2.0.1",
+    "config": "~1.7.0",
+    "lru-cache": "~2.5.0"
   }
 }

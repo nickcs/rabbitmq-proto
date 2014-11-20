@@ -1,0 +1,8 @@
+{
+  "subscriptionName": "upstream",
+  "endpoint": "http://10.11.11.10:3000/upstream",
+  "exchangeOptions": {
+    "type": "fanout",
+    "autoDelete": false
+  }
+}

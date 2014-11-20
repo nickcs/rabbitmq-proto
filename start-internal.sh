@@ -1,2 +1,2 @@
 cd /vagrant/http-publisher
-npm start
+PORT=3100 npm start

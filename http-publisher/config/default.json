@@ -1,6 +1,5 @@
 {
-  "subscriptionName": "downstream",
-  "publishingName": "upstream",
+  "port": 3000,
   "exchangeOptions": {
     "type": "fanout",
     "autoDelete": false
