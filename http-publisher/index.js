@@ -24,14 +24,18 @@ app.get('/status', function(req, res){
 })
 
 app.post('/*', function(req, res){
+  // get the path of the inbound message to be used as the exchange to publish
+  // the message on
   var path = url.parse(req.url).pathname.substring(1);
   var newMessage = req.body;
 
   console.log('message received for exchange: ' + path);
 
+  // connect to exchange of the inbound request path
   app.amqpConnection.exchange(path, exchangeOptions, function(exchange){
     status.lastExchange = 'Last exchange used: ' + path;
     status.lastMessage = newMessage;
+    // publish the inbound message to exchange defined by the url path
     exchange.publish('', newMessage);
     res.send();
   })
